@@ -1,0 +1,36 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+{% form_theme form 'AppBundle:FormTemplates:form_row_template.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #form-container {
+            margin: 5px;
+        }
+        
+        #sport {
+            display: inline-block;
+        }
+        
+        #sport-error {
+            margin-left:2px;
+            display: inline-block;
+        }
+        
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="form-container">
+        <h3 id="team-create-title">
+            Create event
+        </h3>
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        
+        {{ form_label(form.time) }}<br/>
+        <div id="sport">{{ form_widget(form.time) }}</div>
+        <div id="sport-error">{{ form_errors(form.time) }}</div>
+        {{ form_row(form.sport) }}
+        {{ form_row(form.submit)}}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,90 @@
+index:
+    path:     /
+    defaults: { _controller: AppBundle:Default:index }
+
+register:
+    path:     /register
+    defaults: { _controller: AppBundle:Registration:register}
+    
+login:
+    path:     /login
+    defaults: { _controller: AppBundle:Login:login }
+
+logout:
+    path:     /logout
+    
+team_list:
+    path:     /teams
+    defaults: { _controller: AppBundle:Team:listTeams }
+
+team_create:
+    path:     /teams/create
+    defaults: { _controller: AppBundle:Team:createTeam }
+    
+team_view:
+    path:     /teams/{teamId}
+    defaults: { _controller: AppBundle:Team:viewTeam }
+    requirements:
+        teamId: \d+
+    
+team_delete:
+    path:     /teams/delete/{teamId}
+    defaults: { _controller: AppBundle:Team:deleteTeam }
+    requirements:
+        teamId: \d+
+        
+team_leave:
+    path:     /teams/leave
+    defaults: { _controller: AppBundle:Player:leaveTeam }
+    
+team_join:
+    path:     /teams/join/{teamId}
+    defaults: { _controller: AppBundle:Player:joinTeam }
+    requirements:
+        teamId: \d+
+
+sport_list:
+    path:     /sports
+    defaults: { _controller: AppBundle:Sport:listSport }
+    
+sport_create:
+    path:     /sports/create
+    defaults: { _controller: AppBundle:Sport:createSport }
+    
+sport_delete:
+    path:     /sports/delete/{sportId}
+    defaults: { _controller: AppBundle:Sport:deleteSport }
+    requirements:
+        sportId: \d+
+
+event_list:
+    path:     /events
+    defaults: { _controller: AppBundle:Event:listEvents }
+    
+event_create:
+    path:     /events/create
+    defaults: { _controller: AppBundle:Event:createEvent }
+    
+event_delete:
+    path:     /events/delete/{eventId}
+    defaults: { _controller: AppBundle:Event:deleteEvent }
+    requirements:
+        sportId: \d+
+        
+event_view:
+    path:     /events/view/{eventId}
+    defaults: { _controller: AppBundle:Event:viewEvent }
+    requirements:
+        eventId: \d+
+        
+event_join:
+    path:     /events/join/{eventId}
+    defaults: { _controller: AppBundle:Event:joinEvent }
+    requirements:
+        eventId: \d+
+        
+event_leave:
+    path: /events/leave/{eventId}
+    defaults: { _controller: AppBundle:Event:leaveEvent }
+    requirements:
+        eventId: \d+

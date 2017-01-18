@@ -1,0 +1,30 @@
+{% extends 'AppBundle::base.html.twig' %}
+{% form_theme form 'AppBundle:FormTemplates:form_row_template.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #register-form {
+            margin: 2px;
+        }
+        
+        .form-title{
+            margin-bottom: 1em;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="register-form">
+        <div class="form-title">
+            Register
+        </div>
+        {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_end(form) }}
+    </div>
+    <br />    
+    <a href="{{ path('login') }}">Log in</a>    
+    
+{% endblock %}

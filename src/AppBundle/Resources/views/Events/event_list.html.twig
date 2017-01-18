@@ -1,0 +1,83 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+        #events-table {
+            text-align: center;
+        }
+        #events-table table {
+            display: inline-block;
+        }
+        
+        table, th, tr, td {
+            border: 1px solid black;
+        }
+        
+        th {
+            padding: 0px 2px 0px;
+        }
+        td {
+            padding: 0px 2px 0px;
+        }
+        
+        #events-table a {
+            color: blue;
+        }
+        
+        .table-min-width {
+            min-width: 15px;
+        }
+        
+        .in-event {
+            color: red !important;
+        }
+        
+    </style>
+    
+{% endblock %}
+{% block content %}
+    <div id="events-table">
+        <table>
+            <tr>
+                <th class="table-min-width"></th>
+                <th>Event</th>
+                <th>Sport</th>
+                <th>Time</th>
+                <th>Teams</th>
+            </tr>
+            {% if events|length > 0 %}
+                {% for i in 0..events|length - 1 %}
+                    {% set event = events[i] %}
+                    {% set eventId = event.id %}
+                    <tr>
+                        <td class="table-min-width">{{ i+1 }}</td>
+                        {% if eventId in teamEvents %} 
+                            <td><a class="in-event" href="{{ path('event_view', {'eventId': eventId}) }}">{{ event.name }}</a></td>
+                        {% else %}
+                             <td><a href="{{ path('event_view', {'eventId': eventId}) }}">{{ event.name }}</a></td>
+                        {% endif %}
+                         <td>{{ event.sport.name }}</td>
+                         <td>{{ event.time|date('d/m/y H:i') }}</td>
+                        <td>{{ event.teams|length }}</td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('event_delete', {'eventId': eventId}) }}">Delete</a></td>
+                    {% elseif app.user.team is defined %}
+                        {% if eventId in teamEvents %} 
+                            <td><a href="{{ path('event_leave', {'eventId': eventId}) }}">Leave</a></td>
+                        {% else %}
+                            <td><a href="{{ path('event_join', {'eventId' : eventId}) }}">Join</a></td>
+                        {% endif %}
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div>
+                <a href="{{ path('event_create') }}">Create new event</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

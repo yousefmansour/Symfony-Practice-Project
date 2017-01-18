@@ -1,0 +1,28 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+{% form_theme form 'AppBundle:FormTemplates:form_row_template.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #form-container {
+            margin: 5px;
+        }
+        
+        #team-create-form {
+        }
+        
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="form-container">
+        <h3 id="team-create-title">
+            Add sport
+        </h3>
+        <div id="team-create-form">
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.teamSize) }}
+            {{ form_row(form.submit)}}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

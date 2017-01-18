@@ -1,0 +1,54 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #team-table {
+            text-align: center;
+        }
+        #team-table table {
+            display: inline-block;
+        }
+        
+        table, th, tr, td {
+            border: 1px solid black;
+        }
+        
+        th {
+            padding: 0px 2px 0px;
+        }
+        td {
+            padding: 0px 2px 0px;
+        }
+        a {
+            color: blue;
+        }
+        
+        .table-col1 {
+            min-width: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="team-table">
+        <h4>{{ event.name }}</h4>    
+        {% if event.teams|length > 0 %}
+        <table>
+            <tr>
+                <th class="table-col1"></th>
+                <th>Teams</th>
+            </tr>   
+                {% for i in 0..event.teams|length - 1 %}
+                    <tr>
+                        <td>{{ i+1 }}</td>
+                        <td><a href="{{ path('team_view', {'teamId' : event.teams[i].id}) }}">{{ event.teams[i].name }}</a></td>
+                    </tr>
+                {% endfor %}
+        </table>
+        {% else %}
+            <h3>No teams have registered for this event yet.</h3>
+        {% endif %}        
+    </div>
+    
+{% endblock %}

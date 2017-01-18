@@ -1,0 +1,58 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+        #teams-table {
+            text-align: center;
+        }
+        #teams-table table {
+            display: inline-block;
+        }
+        
+        table, th, tr, td {
+            border: 1px solid black;
+        }
+        
+        th {
+            padding: 0px 2px 0px;
+        }
+        td {
+            padding: 0px 2px 0px;
+        }
+        #teams-table a {
+            color: blue;
+        }
+        
+        .table-col1 {
+            min-width: 15px;
+        }
+        
+    </style>
+{% endblock %}
+{% block content %}
+    
+    <div id="teams-table">
+        <table>
+            <tr>
+                <th class="table-col1"></th>
+                <th>Name</th>
+                <th>Team size</th>
+            </tr>
+            {% if sports|length > 0 %}
+                {% for i in 0..sports|length - 1 %}
+                    <tr>
+                        <td class="table-col1">{{ i+1 }}</td>
+                        <td>{{ sports[i].name }}</td>
+                        <td>{{ sports[i].teamSize }}</td>
+                        <td><a href="{{ path('sport_delete', {'sportId': sports[i].id}) }}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <div>
+            <a href="{{ path('sport_create') }}">Add new sport</a>
+        </div>
+    </div>
+{% endblock %}

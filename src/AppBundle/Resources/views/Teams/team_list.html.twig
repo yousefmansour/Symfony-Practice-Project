@@ -1,0 +1,76 @@
+{% extends 'AppBundle:Layouts:main_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+        #teams-table {
+            text-align: center;
+        }
+        #teams-table table {
+            display: inline-block;
+        }
+        
+        table, th, tr, td {
+            border: 1px solid black;
+        }
+        
+        th {
+            padding: 0px 2px 0px;
+        }
+        td {
+            padding: 0px 2px 0px;
+        }
+        
+        #teams-table a {
+            color: blue;
+        }
+        
+        .table-min-width {
+            min-width: 15px;
+        }
+        
+        .my-team {
+            color: red !important;
+        }  
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="teams-table">
+        <table>
+            <tr>
+                <th class="table-min-width"></th>
+                <th>Team</th>
+                <th>Players</th>
+            </tr>
+            {% if teams|length > 0 %}
+                {% for i in 0..teams|length - 1 %}
+                    {% set team = teams[i] %}
+                    {% set teamId = team.id %}
+                    <tr>
+                        <td class="table-min-width">{{ i+1 }}</td>
+                        {% if app.user.team.name is defined and app.user.team.name is same as(team.name) %}
+                            <td><a class="my-team" href="{{ path('team_view', {'teamId': teamId}) }}">{{ team.name }}</a></td>
+                        {% else %}
+                            <td><a href="{{ path('team_view', {'teamId': teamId}) }}">{{ team.name }}</a></td>
+                        {% endif %}
+                        
+                        <td>{{ team.players|length }}</td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('team_delete', {'teamId': teamId}) }}">Delete</a></td>
+                    {% elseif app.user.team.id is defined and app.user.team.id is same as(teamId) %}
+                        <td><a href="{{ path('team_leave') }}">Leave</a></td>
+                    {% else %}
+                        <td><a href="{{ path('team_join', { 'teamId' : team.id }) }}">Join</a></td>
+                    {% endif %}    
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        {% if app.user.team is defined and app.user.team is null %}
+            <div>
+                <a href="{{ path('team_create') }}">Create new team</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    app.player:
+        class: AppBundle\Service\PlayerService
+        arguments: ['@doctrine.orm.entity_manager']
+      
+    app.team:
+        class: AppBundle\Service\TeamService
+        arguments: ['@doctrine.orm.entity_manager']
+        
+    app.sport:
+        class: AppBundle\Service\SportService
+        arguments: ['@doctrine.orm.entity_manager']
+    
+    app.event:
+        class: AppBundle\Service\EventService
+        arguments: ['@doctrine.orm.entity_manager', '@session']

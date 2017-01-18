@@ -1,0 +1,9 @@
+{% use 'AppBundle:FormTemplates:form_error_template.html.twig' %}
+{% use 'AppBundle:FormTemplates:form_label_template.html.twig' %}
+
+{%- block form_row -%}
+    <div>
+        {{ form_label(form) }}</span><br />
+        {{ form_widget(form) }} {{ form_errors(form) }}
+    </div>
+{%- endblock form_row -%}

@@ -1,0 +1,59 @@
+{% extends 'AppBundle::base.html.twig' %}
+{% form_theme form 'AppBundle:FormTemplates:form_row_template.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #login-form {
+            margin: 2px;
+        }
+        
+        #error {
+            height: 1em;
+        }
+    </style>
+{% endblock %}
+    
+{% block body %}
+    <div id="login-form">
+        <div class="form-title">
+            Log in
+        </div> 
+        <div id="flash">
+            {% set flash = app.session.flashbag.all('success') %}
+
+            {% if flash['success'][0] is defined %}
+                {{ flash['success'][0] }}
+            {% endif %} 
+        </div>
+            
+        <div id="error">
+        {% if error %}
+            {% if error.message is same as("Bad credentials.") %}
+                Invalid username/password.  
+            {% endif %}
+        {% endif %}
+        </div>
+        {{ form_start(form) }}
+        {{ form_row(form._username) }}
+        {{ form_row(form._password) }}
+        {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </div>
+    <br />
+    <a href="{{ path('register') }}">Register new account</a><br />
+    <a id="recover-password" href="#">Forgotten password</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script>
+        document.getElementById('recover-password').onclick = function(){
+            var span = document.createElement("span");
+            span.innerHTML = "Too bad :(";
+            var anchor = document.getElementById("recover-password");
+            anchor.parentNode.replaceChild(span, anchor);
+        };
+    </script>
+{% endblock %}
